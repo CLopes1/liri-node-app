@@ -46,16 +46,24 @@ switch (input) {
   case 'movie-this':
     // OMDB API Request
     request('http://omdbapi.com/?apikey=trilogy&t=' + variable, function (error, response, body) {
-      if (error); // Print the error if one occurred
+      if (error) {
+        console.log(error)
+      }
+      else {
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-      console.log('body:', JSON.parse(body));
-
-      // var obj = JSON.parse(body);
-      // console.log(obj.title)
-
+      console.log('Title:', JSON.parse(body).Title);
+      console.log('Year:', JSON.parse(body).Year);
+      console.log('IMDB Rating:', JSON.parse(body).imdbRating);
+      console.log('Rotten Tomatoes Rating:', JSON.parse(body).Ratings[1]);
+      console.log('Country:', JSON.parse(body).Country);
+      console.log('Language:', JSON.parse(body).Language);
+      console.log('Plot:', JSON.parse(body).Plot);
+      console.log('Actors:', JSON.parse(body).Actors);
       console.log("\n-------------\n");
 
       debugger
+
+      }
     });
     break
 
