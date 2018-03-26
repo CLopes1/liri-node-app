@@ -19,6 +19,7 @@
   "homepage": "https://github.com/CLopes1/liri-node-app#readme",
   "dependencies": {
     "dotenv": "^5.0.1",
+    "inspect-process": "^0.5.0",
     "node-spotify-api": "^1.0.7",
     "npm": "^5.7.1",
     "request": "^2.85.0",

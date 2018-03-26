@@ -1,13 +1,11 @@
+//Require your outside files and your NPM modules
 require("dotenv").config();
 var Spotify = require('node-spotify-api')
 var request = require('request');
 var Twitter = require('twitter')
 
-
-
 var variable = process.argv[3]
 var input = process.argv[2]
-
 
 
 // Twitter Key
@@ -28,14 +26,17 @@ var spotify = new Spotify({
 switch (input) {
   //Twitter call
   case 'my-tweets':
-    client.get('statuses/user_timeline', { screen_name: 'dadtellsjokes' }, function (error, tweets, response) {
+    client.get('statuses/user_timeline', { screen_name: variable }, function (error, tweets, response) {
       if (error) {
         console.log(error);
+        //dadtellsjokes
       }
 
       else {
         for (var i = 0; i < 20; i++) {
-          console.log(tweets[i].text);
+          console.log('Tweet: ' + tweets[i].text);
+          console.log('Time Stamp: ' + tweets[i].created_at);
+          console.log("\n-------------\n");
         }
       }
     })
@@ -48,17 +49,32 @@ switch (input) {
       if (error); // Print the error if one occurred
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       console.log('body:', JSON.parse(body));
+
+      // var obj = JSON.parse(body);
+      // console.log(obj.title)
+
+      console.log("\n-------------\n");
+
+      debugger
     });
-    break;
+    break
 
   //Spotify Call
   case 'spotify-this-song':
-  spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
-    if (err) {
-      return console.log('Error occurred: ' + err);
-    }
-   
-  console.log(data); 
-  });
+    spotify.search({ type: 'track', query: variable }, function (err, data) {
+      if (err) {
+        return console.log('Error occurred: ' + err);
+      }
 
+      else {
+        for (var i = 0; i < 20; i++) {
+          console.log('Artist: ' + data.tracks.items[i].artists[0].name);
+          console.log('Track: ' + data.tracks.items[i].name);
+          console.log('Album: ' + data.tracks.items[i].album.name);
+          console.log('Song Preview: ' + data.tracks.items[i].preview_url);
+          console.log("\n-------------\n");
+        }
+      }
+    });
+    break;
 }
